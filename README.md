@@ -1,6 +1,6 @@
 # Crud en GraphQL
 
-para correr el crud debes seguir las siguientes isntrucciones en graph
+para correr el proyecto debes seguir las siguientes instrucciones en la terminal de wsl
 
 ```sh
 cd grahp-crud-py
