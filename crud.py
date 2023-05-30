@@ -63,6 +63,7 @@ class UserCrud:
             with connection.cursor() as cur:
                 query = "SELECT * FROM users order by id asc;"
                 cur.execute(query)
+                print("usuarios encontrados")
                 results = cur.fetchall()
 
                 users = []

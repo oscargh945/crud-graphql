@@ -2,7 +2,6 @@ import typing
 import strawberry
 from crud import UserCrud
 
-users = []
 
 @strawberry.type
 class User:
