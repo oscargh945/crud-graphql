@@ -8,13 +8,13 @@ class UserCrud:
             id SERIAL PRIMARY KEY,
             name varchar(100) NOT NULL,
             email varchar(100) NOT NULL,
-            phone varchar(10)
+            phone FLOAT
         );"""
         cur = connection.cursor()
         cur.execute(query)
         cur.close()
 
-    def crear_user(self, name: str, email: str, phone: str):
+    def crear_user(self, name: str, email: str, phone: float):
         try:
             with connection.cursor() as cur:
                 query="INSERT INTO users (name, email, phone) VALUES (%s, %s, %s) RETURNING *;"
@@ -23,7 +23,7 @@ class UserCrud:
                 print("Usuario creado exitosamente")
                 result = cur.fetchone()
 
-                user = {
+                user = { 
                     "id": result[0],
                     "name": result[1],
                     "email": result[2],
@@ -55,7 +55,7 @@ class UserCrud:
                 return user
         except Exception as err:
             print("Ocurrió un error al bsucar el usuario", err)
-            return None
+            raise Exception("El usuario no se encontro")
 
 
     def select_total_users(self):
@@ -83,7 +83,7 @@ class UserCrud:
             return [] 
         
 
-    def update_user(self, id: int, name: str, email: str, phone: str):
+    def update_user(self, id: int, name: str, email: str, phone: float):
         try:
             with connection.cursor() as cur:
                 query="UPDATE users SET name=%s, email=%s, phone= %s WHERE id= %s RETURNING *;"
@@ -102,7 +102,7 @@ class UserCrud:
         except Exception as err:
             print("ocurrio un error al hacer la actualizacion", err)
             return None
-        
+
 
     def delete_user(self, id: int):
         try:
