@@ -1,4 +1,4 @@
-# Crud en GraphQL
+<h1 align="center"> API with Python and Graphql </h1>
 
 para correr el proyecto debes seguir las siguientes instrucciones en la terminal de wsl
 
