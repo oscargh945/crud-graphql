@@ -1,7 +1,7 @@
 import re
 
 def validation_email(email):
-    regular_expression_email = ('^[(a-z0-9\_\-\.)]+@[(a-z0-9\_\-\.)]+.[(a-z)]$')
+    regular_expression_email = ('^[(a-z0-9\_\-\.)]+@[(a-z0-9\_\-\.)]+.[(a-z)]+$')
     return re.match(regular_expression_email, email) is not None
 
 #emails = ['oscar123@gmail.com', 'paco.com', '123.com']
@@ -16,9 +16,9 @@ def validation_name(name):
 #for name in names:
     #print("probando si el name", name ,"es valido =>  ", validation_name(name))
 
-def validation_phone(phone: str) -> bool:
-    regular_expression_phone = r'^\d{10}$'
-    return re.match(regular_expression_phone, phone) is not None
+def validation_phone(phone):
+        regular_expression_phone = r'^\d+$'
+        return re.match(regular_expression_phone, phone) is not None
 
 #phones = ["31138951524", "3006015635", "pppppppppp"]
 #for phone in phones:

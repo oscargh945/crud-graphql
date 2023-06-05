@@ -1,7 +1,7 @@
 import typing
 import strawberry
 from crud import UserCrud
-from validations import validation_email, validation_name #, validation_phone
+from validations import validation_email, validation_name, validation_phone
 
 
 @strawberry.type
@@ -9,15 +9,14 @@ class User:
     id: strawberry.ID
     name: str
     email: str
-    phone: float 
+    phone: str 
    
 
 @strawberry.input
 class UserInput:
     name: str
     email: str
-    phone: float
-
+    phone: str
 
 @strawberry.type
 class Query:
@@ -63,8 +62,8 @@ class Mutation:
             raise Exception("Ingresa un nombre valido.")
         
         
-        #if not validation_phone(input.phone):
-            #raise Exception("Ingresa un phone valido.")
+        if not validation_phone(input.phone):
+            raise Exception("Ingresa un phone valido.")
         
         result = user.crear_user(name= input.name, email= input.email, phone= input.phone)
         user_response = User(id= result["id"], name= result["name"], phone=result["phone"], email=result["email"])
