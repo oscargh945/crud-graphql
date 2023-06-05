@@ -8,13 +8,13 @@ class UserCrud:
             id SERIAL PRIMARY KEY,
             name varchar(100) NOT NULL,
             email varchar(100) NOT NULL,
-            phone FLOAT
+            phone varchar(50) NOT NULL
         );"""
         cur = connection.cursor()
         cur.execute(query)
         cur.close()
 
-    def crear_user(self, name: str, email: str, phone: float):
+    def crear_user(self, name: str, email: str, phone: str):
         try:
             with connection.cursor() as cur:
                 query="INSERT INTO users (name, email, phone) VALUES (%s, %s, %s) RETURNING *;"
@@ -83,7 +83,7 @@ class UserCrud:
             return [] 
         
 
-    def update_user(self, id: int, name: str, email: str, phone: float):
+    def update_user(self, id: int, name: str, email: str, phone: str):
         try:
             with connection.cursor() as cur:
                 query="UPDATE users SET name=%s, email=%s, phone= %s WHERE id= %s RETURNING *;"
