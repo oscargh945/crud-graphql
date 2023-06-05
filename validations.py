@@ -23,10 +23,3 @@ def validation_phone(phone):
 #phones = ["31138951524", "3006015635", "pppppppppp"]
 #for phone in phones:
     #print("probando si '{}' es un phone? => {}" .format(phone, validation_phone(phone)))
-
-
-#try:
-#        if float(phone):
-#            return True
-#     except:
-#            return False
