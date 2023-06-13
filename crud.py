@@ -151,3 +151,28 @@ class UserCrud:
         except Exception as err:
             print("Ocurrió un error al buscar los usuarios", err)
             raise Exception("Asegurate de tener suficientes usuarios para mostrarlos")
+
+    
+    def search_users(self, name: str):
+        try:
+            with connection.cursor() as cur:
+                query ="SELECT * FROM users WHERE name LIKE %s"
+                cur.execute(query, ('%' + name + '%',))
+                print("Usuarios encontrados")
+                results = cur.fetchall()
+
+                users = []
+                for result in results:
+                    user = {
+                        "id": result[0],
+                        "name": result[1],
+                        "email": result[2],
+                        "phone": result[3]
+                    }
+                    users.append(user)
+
+                return users
+
+        except Exception as err:
+            print("Los usuarios no se pudieron encontrar en la busqueda", err)
+            raise Exception("no se encuentra ningun usuario con este nombre")

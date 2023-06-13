@@ -51,6 +51,25 @@ class Query:
             
         return user_instances
 
+
+    @strawberry.field
+    def search(self, name: str) -> typing.List[User]:
+        user_crud = UserCrud()
+        users = user_crud.search_users(name)
+
+        user_instances = []
+        for user in users:
+            user_instance = User(
+                id=user["id"],
+                name=user["name"],
+                email=user["email"],
+                phone=user["phone"]
+            )
+            user_instances.append(user_instance)
+
+        return user_instances
+
+
     @strawberry.field
     def pagination(self, page: int , page_size: int) -> typing.List[User]:
         user_crud = UserCrud()
