@@ -156,7 +156,7 @@ class UserCrud:
     def search_users(self, name: str):
         try:
             with connection.cursor() as cur:
-                query ="SELECT * FROM users WHERE name LIKE %s"
+                query ="SELECT * FROM users WHERE name LIKE %s ORDER BY name ASC"
                 cur.execute(query, ('%' + name + '%',))
                 print("Usuarios encontrados")
                 results = cur.fetchall()
@@ -176,3 +176,29 @@ class UserCrud:
         except Exception as err:
             print("Los usuarios no se pudieron encontrar en la busqueda", err)
             raise Exception("no se encuentra ningun usuario con este nombre")
+        
+    
+    def get_all_users(self, name: str, page: int, page_size: int):
+        try:
+            with connection.cursor() as cur:
+                offset = (page - 1) * page_size
+                query = f"SELECT * FROM users WHERE name LIKE %s ORDER BY name ASC OFFSET {offset} LIMIT {page_size}"
+                cur.execute(query, ('%' + name + '%',))
+                print("Los usuarios buscados fueron encontrados y paginados")
+                results = cur.fetchall()
+
+                users = []
+                for result in results:
+                    user = {
+                        "id": result[0],
+                        "name": result[1],
+                        "email": result[2],
+                        "phone": result[3]
+                    }
+                    users.append(user)
+
+                return users
+        except Exception as err:
+            print("la busqueda a fallado", err)
+            raise Exception("La busqueda ha fallado junto con la paginacion")
+    

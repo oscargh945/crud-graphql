@@ -20,6 +20,7 @@ class UserInput:
     phone: str
     password: str
 
+
 @strawberry.type
 class Query:
     @strawberry.field
@@ -87,6 +88,23 @@ class Query:
             
         return user_instances
 
+
+    @strawberry.field
+    def get_all(self, name: str, page: int, page_size: int) -> typing.List[User]:
+        user_crud = UserCrud()
+        users = user_crud.get_all_users(name, page, page_size)
+
+        user_instances = []
+        for user in users:
+            user_instance = User(
+                id=user["id"],
+                name=user["name"],
+                email=user["email"],
+                phone=user["phone"]
+            )
+            user_instances.append(user_instance)
+            
+        return user_instances
         
 @strawberry.type
 class Mutation:
