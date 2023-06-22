@@ -9,7 +9,8 @@ class UserCrud:
             name varchar(100) NOT NULL,
             email varchar(100) NOT NULL,
             phone varchar(50) NOT NULL,
-            password varchar(250) NOT NULL
+            password varchar(250) NOT NULL,
+            is_deleted boolean DEFAULT FALSE
         );"""
         cur = connection.cursor()
         cur.execute(query)
@@ -39,7 +40,7 @@ class UserCrud:
     def select_user(self, id: int):
         try:
             with connection.cursor() as cur:
-                query = "SELECT * FROM users WHERE id = %s;"
+                query = "SELECT * FROM users WHERE id = %s AND is_deleted = FALSE;"
                 cur.execute(query, (id,))
                 print("usuario encontrado")
                 result = cur.fetchone()
@@ -62,7 +63,7 @@ class UserCrud:
     def select_total_users(self):
         try:
             with connection.cursor() as cur:
-                query = "SELECT * FROM users order by id asc;"
+                query = "SELECT * FROM users WHERE is_deleted = FALSE ORDER BY id ASC ;"
                 cur.execute(query)
                 print("usuarios encontrados")
                 results = cur.fetchall()
@@ -108,7 +109,7 @@ class UserCrud:
     def delete_user(self, id: int):
         try:
             with connection.cursor() as cur:
-                query="DELETE FROM users WHERE id=%s RETURNING *;"
+                query="UPDATE users SET is_deleted = TRUE WHERE id=%s RETURNING *;"
                 cur.execute(query, (id))
                 connection.commit()
                 print("usuario eliminado")
@@ -131,7 +132,7 @@ class UserCrud:
         try:
             with connection.cursor() as cur:
                 offset = (page - 1) * page_size
-                query = f"SELECT * FROM users ORDER BY id ASC OFFSET {offset} LIMIT {page_size};"
+                query = f"SELECT * FROM users WHERE is_deleted = FALSE ORDER BY id ASC OFFSET {offset} LIMIT {page_size};"
                 cur.execute(query)
                 print("usuarios encontrados")
                 results = cur.fetchall()
@@ -156,7 +157,7 @@ class UserCrud:
     def search_users(self, name: str):
         try:
             with connection.cursor() as cur:
-                query ="SELECT * FROM users WHERE name LIKE %s ORDER BY name ASC"
+                query ="SELECT * FROM users WHERE is_deleted = FALSE AND name LIKE %s ORDER BY name ASC"
                 cur.execute(query, ('%' + name + '%',))
                 print("Usuarios encontrados")
                 results = cur.fetchall()
@@ -182,7 +183,7 @@ class UserCrud:
         try:
             with connection.cursor() as cur:
                 offset = (page - 1) * page_size
-                query = f"SELECT * FROM users WHERE name LIKE %s ORDER BY name ASC OFFSET {offset} LIMIT {page_size}"
+                query = f"SELECT * FROM users WHERE is_deleted = FALSE  AND name LIKE %s ORDER BY name ASC OFFSET {offset} LIMIT {page_size}"
                 cur.execute(query, ('%' + name + '%',))
                 print("Los usuarios buscados fueron encontrados y paginados")
                 results = cur.fetchall()

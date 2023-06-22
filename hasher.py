@@ -9,22 +9,22 @@ def password_incognit(password):
 def password_match():
     pass
 
-password = "papo123"
-password2 = password.encode('utf-8')
+# password = "papo123"
+# password2 = password.encode('utf-8')
 
 # print(password)
 # print(password2)
 
-# # if password_incognit(password):
-# #     print("esta es la contraseña hasheada => ", password_incognit(password))
+# if password_incognit(password):
+#     print("esta es la contraseña hasheada => ", password_incognit(password))
 
-# # print("esta es la contraseña normal => ", password)
+# print("esta es la contraseña normal => ", password)
 
-# password_bytes = password.encode()
-# passw = password_incognit(password_bytes)
+# password2 = password.encode()
+# passw = password_incognit(password)
 
 # print("comparando las contraseñas...")
-# if bcrypt.checkpw(password_bytes, passw):
+# if bcrypt.checkpw(password2, passw):
 #     print("Las contraseñas coinciden")
 # else:
 #     print("Las contraseñas NO coinciden!!!")
